@@ -1,11 +1,24 @@
 if (process.argv[2] == 'movie') {
+  additionToFile();
   movie();
 } else if (process.argv[2] == 'spotify') {
+  additionToFile();
   spotify();
 } else if (process.argv[2] == 'concert') {
+  additionToFile();
   concert();
 } else {
   error();
+}
+
+function additionToFile() {
+  var fs = require("fs");
+  fs.appendFile("random.txt", ", " + process.argv[2] + " " + '"' + process.argv[3] + '"\n', function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Content Added!")
+  });
 }
 
 function movie() {
@@ -119,7 +132,6 @@ function error() {
       else if (appSelector == "movie") {
           movie();
       }
-
   });
 }
 

@@ -4,10 +4,10 @@ if (process.argv[2] == 'movie') {
   spotify();
 } else if (process.argv[2] == 'concert') {
   concert();
+} else {
+  
 }
 
-
-//////if process.argv[2] = 'movie'
 function movie() {
   var axios = require("axios");
   var movie = ifMovieBlank();
@@ -33,9 +33,7 @@ function movie() {
       console.log("Actors: " + response.data.Actors);
     });
 }
-/////////////////////////////////////////////////////////////////
 
-////// if process.argv[2] = 'spotify'
 function spotify() {
   require("dotenv").config();
   var keys = require("./keys");
@@ -67,9 +65,7 @@ function spotify() {
     }
   );
 }
-///////////////////////////////////////////////////////////////////
 
-//////if process.argv[2] = 'concert'
 function concert() {
   var axios = require("axios");
   var artist = ifArtistBlank();
@@ -99,4 +95,17 @@ function concert() {
       );
       console.log("Date: " + response.data[0].datetime); // Date of the Event (use moment to format this as "MM/DD/YYYY")
     });
+}
+
+function random() {
+  var fs = require("fs");
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+    return data.slice(8);
+    // console.log(data.slice(8));
+    // var dataArr = data.split(",");
+    // console.log(dataArr);
+  });
 }

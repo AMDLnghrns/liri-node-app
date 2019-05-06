@@ -17,7 +17,6 @@ function additionToFile() {
     if (err) {
       return console.log(err);
     }
-    console.log("Content Added!")
   });
 }
 

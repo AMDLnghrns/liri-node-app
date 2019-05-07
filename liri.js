@@ -1,23 +1,32 @@
-if (process.argv[2] == 'movie') {
+if (process.argv[2] == "movie") {
   additionToFile();
   movie();
-} else if (process.argv[2] == 'spotify') {
+} else if (process.argv[2] == "spotify") {
   additionToFile();
   spotify();
-} else if (process.argv[2] == 'concert') {
+} else if (process.argv[2] == "concert") {
   additionToFile();
   concert();
 } else {
   error();
 }
 
+var spotifyChoice = [];
+var spotifyChoice2 = spotifyChoice.length;
+var movieChoice = [];
+var concertChoice = [];
+
 function additionToFile() {
   var fs = require("fs");
-  fs.appendFile("random.txt", ", " + process.argv[2] + " " + '"' + process.argv[3] + '"\n', function(err) {
-    if (err) {
-      return console.log(err);
+  fs.appendFile(
+    "random.txt",
+    ", " + process.argv[2] + " " + '"' + process.argv[3] + '"\n',
+    function(err) {
+      if (err) {
+        return console.log(err);
+      }
     }
-  });
+  );
 }
 
 function movie() {
@@ -27,7 +36,7 @@ function movie() {
     if (process.argv.length < 4) {
       return "Mr. Nobody";
     } else {
-      return process.argv[3];
+      return [process.argv[3]];
     }
   }
 
@@ -56,11 +65,20 @@ function spotify() {
   var queryValue = ifSpotifyBlank();
 
   function ifSpotifyBlank() {
-    if (process.argv.length < 4) {
+    if (spotifyChoice2 == 0) {
+      return spotifyChoice[0];
+    } else if (process.argv.length < 4) {
       return "The Sign Ace of Base";
     } else {
-      return process.argv[3];
+      return [process.argv[3]];
     }
+    // if (process.argv.length < 4) {
+    //   return "The Sign Ace of Base";
+    //   } else if (spotifyChoice2 !== 0) {
+    //     return spotifyChoice[0];
+    // } else {
+    //   return [process.argv[3]];
+    // }
   }
 
   spotify.search(
@@ -81,7 +99,6 @@ function concert() {
   var axios = require("axios");
   var moment = require("moment");
   var artist = ifArtistBlank();
-  // var artist = 'Phantogram';
 
   function ifArtistBlank() {
     if (process.argv.length < 4) {
@@ -105,32 +122,35 @@ function concert() {
           ", " +
           response.data[0].venue.region
       );
-      console.log("Date: " + moment(response.data[0].datetime).format('L')); // Date of the Event (use moment to format this as "MM/DD/YYYY")
+      console.log("Date: " + moment(response.data[0].datetime).format("L")); // Date of the Event (use moment to format this as "MM/DD/YYYY")
     });
 }
 
 function error() {
   var fs = require("fs");
-  fs.readFile("random.txt", "utf8", function (error, data) {
-      if (error) {
-          return console.log(error);
-      }
-      var dataArr = data.split(",");
-      var dataArr2 = dataArr[0].split(' ')
-      appSelector = dataArr2[0];
-      var dataArr3 = dataArr[0].split('"');
-      console.log(dataArr3[1]);
-      input = dataArr[0];
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+    var dataArr = data.split(",");
+    var dataArr2 = dataArr[0].split(" ");
+    appSelector = dataArr2[0];
+    var dataArr3 = dataArr[0].split('"');
+    input = dataArr[0];
 
-      if (appSelector == "spotify") {
-          spotify(); //run the dataArr3[1] value through the spotify function
-      }
-      else if (appSelector == "concert") {
-          concerts();
-      }
-      else if (appSelector == "movie") {
-          movie();
-      }
+    if (appSelector == "spotify") {
+      spotifyChoice.push(dataArr3[1]);
+      console.log("Spotify: " + spotifyChoice);
+      console.log(spotifyChoice2);
+      spotify(); //run the dataArr3[1] value through the spotify function
+    } else if (appSelector == "concert") {
+      concertChoice.push(dataArr3[1]);
+      console.log("Concert: " + concertChoice);
+      concert();
+    } else if (appSelector == "movie") {
+      movieChoice.push(dataArr3[1]);
+      console.log("Movie: " + movieChoice);
+      movie();
+    }
   });
 }
-

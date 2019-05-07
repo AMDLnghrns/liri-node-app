@@ -72,13 +72,6 @@ function spotify() {
     } else {
       return [process.argv[3]];
     }
-    // if (process.argv.length < 4) {
-    //   return "The Sign Ace of Base";
-    //   } else if (spotifyChoice2 !== 0) {
-    //     return spotifyChoice[0];
-    // } else {
-    //   return [process.argv[3]];
-    // }
   }
 
   spotify.search(
@@ -140,16 +133,12 @@ function error() {
 
     if (appSelector == "spotify") {
       spotifyChoice.push(dataArr3[1]);
-      console.log("Spotify: " + spotifyChoice);
-      console.log(spotifyChoice2);
-      spotify(); //run the dataArr3[1] value through the spotify function
+      spotify();
     } else if (appSelector == "concert") {
       concertChoice.push(dataArr3[1]);
-      console.log("Concert: " + concertChoice);
       concert();
     } else if (appSelector == "movie") {
       movieChoice.push(dataArr3[1]);
-      console.log("Movie: " + movieChoice);
       movie();
     }
   });
